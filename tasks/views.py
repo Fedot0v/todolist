@@ -43,3 +43,11 @@ class TaskViewList(ListView):
     context_object_name = "tasks"
     ordering = ["is_complete", "created_at"]
     paginate_by = 5
+
+
+class TaskCreateView(CreateView):
+    model = Task
+    fields = "__all__"
+    template_name = "tasks/tasks_form.html"
+    success_url = reverse_lazy("tasks:index")
+    context_object_name = "task"
