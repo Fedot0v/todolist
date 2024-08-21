@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <h1 class="mt-4">Welcome to Your Todo List</h1>
+    <div class="text-right mb-4">
+      <a class="btn btn-primary" href="{% url 'tasks:tasks-create' %}">Add Task</a>
+    </div>
+
+    <h2 class="mt-4">Tasks</h2>
+    <ul class="list-group">
+      {% for task in tasks %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <div>
+            {{ task.content }} -
+            {% if task.is_complete %}
+              <span class="badge badge-success">Completed</span>
+            {% else %}
+              <span class="badge badge-warning">Pending</span>
+            {% endif %}
+            {% if task.deadline %}
+              <span class="badge badge-secondary float-right">Due: {{ task.deadline|date:"d M Y" }}</span>
+            {% endif %}
+            <div class="mt-2">
+              {% if task.tags.all %}
+                <span class="badge badge-info">Tags:
+                  {% for tag in task.tags.all %}
+                    {{ tag.name }}
+                  {% endfor %}
+                </span>
+              {% else %}
+                <span class="badge badge-light">No tags</span>
+              {% endif %}
+            </div>
+          </div>
+          <div>
+            <a class="btn btn-sm btn-info" href="{% url 'tasks:tasks-update' task.pk %}">Update</a>
+            <form action="{% url 'tasks:tasks-delete' task.pk %}" method="post" style="display:inline;">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this task?');">Delete</button>
+            </form>
+            <form action="{% url 'tasks:index' %}" method="post" style="display:inline;">
+              {% csrf_token %}
+              <input type="hidden" name="task_id" value="{{ task.pk }}">
+              <input type="hidden" name="status" value="{% if task.is_complete %}False{% else %}True{% endif %}">
+              {% if task.is_complete %}
+                <button type="submit" class="btn btn-sm btn-warning">Undo</button>
+              {% else %}
+                <button type="submit" class="btn btn-sm btn-success">Complete</button>
+              {% endif %}
+            </form>
+          </div>
+        </li>
+      {% empty %}
+        <li class="list-group-item">No tasks available.</li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endblock %}
