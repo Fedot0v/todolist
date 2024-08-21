@@ -1,0 +1,17 @@
+.sidebar {
+    border-right: 1px solid #ddd;
+    background-color: #f8f9fa;
+}
+
+.sidebar-title {
+    margin-bottom: 1rem;
+    font-weight: bold;
+}
+
+.nav-link.active {
+    font-weight: bold;
+}
+
+.content-wrapper {
+    padding: 15px;
+}
