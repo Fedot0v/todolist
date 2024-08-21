@@ -18,7 +18,7 @@ urlpatterns = [
     path("tags", TagViewList.as_view(), name="tags-list"),
     path("tags/create/", TagCreateView.as_view(), name="tags-create"),
     path(
-        "tags/<int:pk>/create/",
+        "tags/<int:pk>/update/",
         TagUpdateView.as_view(),
         name="tags-update"
     ),
