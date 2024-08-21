@@ -1,5 +1,6 @@
 .sidebar {
     border-right: 1px solid #ddd;
+    background-color: #f8f9fa;
 }
 
 .sidebar-title {
@@ -9,4 +10,8 @@
 
 .nav-link.active {
     font-weight: bold;
+}
+
+.content-wrapper {
+    padding: 15px;
 }
