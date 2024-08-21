@@ -1,7 +1,7 @@
 from django.db import models
 
 class Tag(models.Model):
-    name = models.TextField()
+    name = models.CharField(max_length=255, unique=True)
 
     def __str__(self):
         return self.name
@@ -16,9 +16,3 @@ class Task(models.Model):
 
     def __str__(self):
         return f"Tag: {self.tags.name} content: {self.content}"
-
-
-    def status(self):
-        if self.is_complete:
-            return "Complete"
-        return "Pending"
