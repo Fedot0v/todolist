@@ -13,7 +13,7 @@
         <li class="list-group-item d-flex justify-content-between align-items-center">
           {{ tag.name }}
           <div>
-            <a class="btn btn-secondary btn-sm" href="{% url 'tasks:tags-update' tag.pk %}">Edit</a>
+            <a class="btn btn-secondary btn-sm" href="{% url 'tasks:tags-update' pk=tag.id %}">Edit</a>
             <a class="btn btn-danger btn-sm" href="{% url 'tasks:tags-delete' pk=tag.id %}">Delete</a>
           </div>
         </li>
