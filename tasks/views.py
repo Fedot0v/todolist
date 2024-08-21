@@ -42,15 +42,15 @@ class TaskViewList(ListView):
     paginate_by = 5
 
     def post(self, request, *args, **kwargs):
-        task_id = request.POST.get('task_id')
-        status = request.POST.get('status')
+        task_id = request.POST.get("task_id")
+        status = request.POST.get("status")
 
         if task_id is not None and status is not None:
             task = get_object_or_404(Task, pk=task_id)
-            task.is_complete = status == 'True'
+            task.is_complete = status == "True"
             task.save()
 
-        return redirect('tasks:index')
+        return redirect("tasks:index")
 
 
 class TaskCreateView(CreateView):
