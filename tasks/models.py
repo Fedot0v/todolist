@@ -15,4 +15,4 @@ class Task(models.Model):
     tags = models.ManyToManyField(Tag, related_name="tasks")
 
     def __str__(self):
-        return f"Tag: {self.tags.name} content: {self.content}"
+        return f"content: {self.content}"
