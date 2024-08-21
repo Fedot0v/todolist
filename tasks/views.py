@@ -1,12 +1,9 @@
-from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
+from tasks.forms import TaskForm
 from tasks.models import Tag, Task
-
-
-def index(request):
-    return render(request, "tasks/index.html")
 
 
 class TagViewList(ListView):
@@ -44,10 +41,33 @@ class TaskViewList(ListView):
     ordering = ["is_complete", "created_at"]
     paginate_by = 5
 
+    def post(self, request, *args, **kwargs):
+        task_id = request.POST.get('task_id')
+        status = request.POST.get('status')
+
+        if task_id is not None and status is not None:
+            task = get_object_or_404(Task, pk=task_id)
+            task.is_complete = status == 'True'
+            task.save()
+
+        return redirect('tasks:index')
+
 
 class TaskCreateView(CreateView):
     model = Task
-    fields = "__all__"
+    form_class = TaskForm
     template_name = "tasks/tasks_form.html"
     success_url = reverse_lazy("tasks:index")
     context_object_name = "task"
+
+
+class TaskUpdateView(UpdateView):
+    model = Task
+    form_class = TaskForm
+    template_name = "tasks/tasks_form.html"
+    context_object_name = "task"
+
+
+class TaskDeleteView(DeleteView):
+    model = Task
+    success_url = reverse_lazy("tasks:index")
