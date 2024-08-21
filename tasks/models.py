@@ -18,3 +18,7 @@ class Task(models.Model):
         return f"Tag: {self.tags.name} content: {self.content}"
 
 
+    def status(self):
+        if self.is_complete:
+            return "Complete"
+        return "Pending"
